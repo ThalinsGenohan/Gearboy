@@ -51,6 +51,7 @@ static void file_dialog_save_ram(void);
 static void file_dialog_load_state(void);
 static void file_dialog_save_state(void);
 static void file_dialog_load_symbols(void);
+static void file_dialog_cart_interface(void);
 static void keyboard_configuration_item(const char* text, SDL_Scancode* key);
 static void gamepad_configuration_item(const char* text, int* button);
 static void popup_modal_keyboard(void);
@@ -192,6 +193,12 @@ void gui_load_rom(const char* path)
     }
 }
 
+void gui_connect_interface()
+{
+    emu_connect_interface();
+    emu_resume();
+}
+
 static void main_menu(void)
 {
     bool open_rom = false;
@@ -201,6 +208,7 @@ static void main_menu(void)
     bool save_state = false;
     bool open_about = false;
     bool open_symbols = false;
+    bool open_interface = false;
 
     for (int i = 0; i < 4; i++)
         custom_palette[i] = color_int_to_float(config_video.color[i]);
@@ -230,6 +238,11 @@ static void main_menu(void)
                 }
 
                 ImGui::EndMenu();
+            }
+
+            if (ImGui::MenuItem("Open Cart Interface..."))
+            {
+                gui_connect_interface();
             }
 
             ImGui::Separator();
@@ -682,6 +695,9 @@ static void main_menu(void)
     if (open_symbols)
         ImGui::OpenPopup("Load Symbols File...");
 
+    if (open_interface)
+        ImGui::OpenPopup("Cartridge Interface...");
+
     if (open_about)
     {
         dialog_in_use = true;
@@ -695,6 +711,7 @@ static void main_menu(void)
     file_dialog_load_state();
     file_dialog_save_state();
     file_dialog_load_symbols();
+    file_dialog_cart_interface();
 
     for (int i = 0; i < 4; i++)
         config_video.color[i] = color_float_to_int(custom_palette[i]);
@@ -857,6 +874,14 @@ static void file_dialog_load_symbols(void)
     {
         gui_debug_reset_symbols();
         gui_debug_load_symbols_file(file_dialog.selected_path.c_str());
+    }
+}
+
+static void file_dialog_cart_interface(void)
+{
+    if (file_dialog.showFileDialog("Open Cartridge Interface...", imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 400), ".cart,*.*", &dialog_in_use))
+    {
+        std::cout << "Hi" << std::endl;
     }
 }
 

@@ -37,6 +37,7 @@ class MBC3MemoryRule;
 class MBC5MemoryRule;
 class MultiMBC1MemoryRule;
 class MemoryRule;
+class CartInterface;
 
 class GearboyCore
 {
@@ -81,6 +82,8 @@ public:
     Processor* GetProcessor();
     Audio* GetAudio();
     Video* GetVideo();
+    void ConnectInterface();
+    bool IsInterfacing();
 
 private:
     void RenderDMGFrame(u16* pFrameBuffer) const;
@@ -111,6 +114,9 @@ private:
     int m_iRTCUpdateCount;
     RamChangedCallback m_pRamChangedCallback;
     GB_Color_Format m_pixelFormat;
+    CartInterface* m_pCartInterface;
+
+    bool m_bInterfacing;
 };
 
 #endif	/* CORE_H */

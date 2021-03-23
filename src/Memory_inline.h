@@ -1,6 +1,7 @@
 #ifndef MEMORY_INLINE_H
 #define	MEMORY_INLINE_H
 
+#include "CartInterface.h"
 #include "CommonMemoryRule.h"
 #include "IORegistersMemoryRule.h"
 
@@ -13,6 +14,7 @@ inline u8 Memory::Read(u16 address)
         case 0x4000:
         case 0x6000:
         {
+            if (m_bInterfacing) return m_pCartInterface->Read(address);
             return m_pCurrentMemoryRule->PerformRead(address);
         }
         case 0x8000:
@@ -21,6 +23,7 @@ inline u8 Memory::Read(u16 address)
         }
         case 0xA000:
         {
+            if (m_bInterfacing) return m_pCartInterface->Read(address);
             return m_pCurrentMemoryRule->PerformRead(address);
         }
         case 0xC000:
@@ -47,7 +50,8 @@ inline void Memory::Write(u16 address, u8 value)
         case 0x4000:
         case 0x6000:
         {
-            m_pCurrentMemoryRule->PerformWrite(address, value);
+            if (m_bInterfacing) m_pCartInterface->Write(address, value);
+            else m_pCurrentMemoryRule->PerformWrite(address, value);
             break;
         }
         case 0x8000:
@@ -57,7 +61,8 @@ inline void Memory::Write(u16 address, u8 value)
         }
         case 0xA000:
         {
-            m_pCurrentMemoryRule->PerformWrite(address, value);
+            if (m_bInterfacing) m_pCartInterface->Write(address, value);
+            else m_pCurrentMemoryRule->PerformWrite(address, value);
             break;
         }
         case 0xC000:

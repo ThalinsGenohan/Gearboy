@@ -33,6 +33,7 @@
 #include "MBC3MemoryRule.h"
 #include "MBC5MemoryRule.h"
 #include "MultiMBC1MemoryRule.h"
+#include "CartInterface.h"
 
 GearboyCore::GearboyCore()
 {
@@ -51,11 +52,13 @@ GearboyCore::GearboyCore()
     InitPointer(m_pMBC3MemoryRule);
     InitPointer(m_pMBC5MemoryRule);
     InitPointer(m_pRamChangedCallback);
+    InitPointer(m_pCartInterface);
     m_bCGB = false;
     m_bPaused = false;
     m_bForceDMG = false;
     m_iRTCUpdateCount = 0;
     m_pixelFormat = GB_PIXEL_RGB565;
+    m_bInterfacing = false;
 }
 
 GearboyCore::~GearboyCore()
@@ -74,6 +77,7 @@ GearboyCore::~GearboyCore()
     SafeDelete(m_pVideo);
     SafeDelete(m_pProcessor);
     SafeDelete(m_pMemory);
+    SafeDelete(m_pCartInterface);
 }
 
 void GearboyCore::Init(GB_Color_Format pixelFormat)
@@ -88,6 +92,7 @@ void GearboyCore::Init(GB_Color_Format pixelFormat)
     m_pAudio = new Audio();
     m_pInput = new Input(m_pMemory, m_pProcessor);
     m_pCartridge = new Cartridge();
+    m_pCartInterface = new CartInterface();
 
     m_pMemory->Init();
     m_pProcessor->Init();
@@ -95,6 +100,7 @@ void GearboyCore::Init(GB_Color_Format pixelFormat)
     m_pAudio->Init();
     m_pInput->Init();
     m_pCartridge->Init();
+    m_pCartInterface->Init();
 
     InitMemoryRules();
     InitDMGPalette();
@@ -945,3 +951,25 @@ void GearboyCore::RenderDMGFrame(u16* pFrameBuffer) const
         }
     }
 }
+
+void GearboyCore::ConnectInterface()
+{
+    if (m_pCartInterface->Open() != 0)
+    {
+        std::cout << "ERROR: Cartridge interface could not connect!" << std::endl;
+        return;
+    }
+
+    m_bInterfacing = true;
+    m_pMemory->SetInterface(m_pCartInterface);
+    m_pMemory->SetInterfacing(true);
+
+    Reset(m_bForceDMG ? false : m_pCartridge->IsCGB());
+
+}
+
+bool GearboyCore::IsInterfacing()
+{
+    return m_bInterfacing;
+}
+

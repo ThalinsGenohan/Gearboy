@@ -28,6 +28,7 @@ class Processor;
 class Video;
 class CommonMemoryRule;
 class IORegistersMemoryRule;
+class CartInterface;
 
 class Memory
 {
@@ -88,6 +89,9 @@ public:
     std::vector<stDisassembleRecord*>* GetBreakpoints();
     stDisassembleRecord* GetRunToBreakpoint();
     void SetRunToBreakpoint(stDisassembleRecord* pBreakpoint);
+    void SetInterface(CartInterface* pCartInterface);
+    bool IsInterfacing();
+    void SetInterfacing(bool interfacing);
 
 private:
     Processor* m_pProcessor;
@@ -110,6 +114,8 @@ private:
     u8 m_HDMA[5];
     u16 m_HDMASource;
     u16 m_HDMADestination;
+    CartInterface* m_pCartInterface;
+    bool m_bInterfacing;
 };
 
 #include "Memory_inline.h"

@@ -35,6 +35,7 @@ Memory::Memory()
     InitPointer(m_pCommonMemoryRule);
     InitPointer(m_pIORegistersMemoryRule);
     InitPointer(m_pCurrentMemoryRule);
+    InitPointer(m_pCartInterface);
     m_bCGB = false;
     m_iCurrentWRAMBank = 1;
     m_iCurrentLCDRAMBank = 0;
@@ -44,6 +45,7 @@ Memory::Memory()
         m_HDMA[i] = 0;
     m_HDMASource = 0;
     m_HDMADestination = 0;
+    m_bInterfacing = false;
 }
 
 Memory::~Memory()
@@ -56,6 +58,7 @@ Memory::~Memory()
     InitPointer(m_pCommonMemoryRule);
     InitPointer(m_pIORegistersMemoryRule);
     InitPointer(m_pCurrentMemoryRule);
+    InitPointer(m_pCartInterface);
 
     if (IsValidPointer(m_pDisassembledROMMap))
     {
@@ -558,4 +561,21 @@ void Memory::SetRunToBreakpoint(Memory::stDisassembleRecord* pBreakpoint)
 {
     m_pRunToBreakpoint = pBreakpoint;
 }
+
+void Memory::SetInterface(CartInterface* pCartInterface)
+{
+    m_pCartInterface = pCartInterface;
+}
+
+bool Memory::IsInterfacing()
+{
+    return m_bInterfacing;
+}
+
+void Memory::SetInterfacing(bool interfacing)
+{
+    m_bInterfacing = interfacing;
+}
+
+
 

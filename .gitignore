@@ -83,3 +83,7 @@ platforms/libretro/libs/
 
 #JetBrains
 .idea
+
+#boost
+platforms/**/boost-1.75.0/
+!platforms/**/put_boost_here

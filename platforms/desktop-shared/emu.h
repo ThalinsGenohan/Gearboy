@@ -73,6 +73,7 @@ EXTERN void emu_color_correction(bool correction);
 EXTERN void emu_debug_step(void);
 EXTERN void emu_debug_continue(void);
 EXTERN void emu_debug_next_frame(void);
+EXTERN void emu_connect_interface(void);
 
 #undef EMU_IMPORT
 #undef EXTERN

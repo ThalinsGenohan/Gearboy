@@ -720,3 +720,8 @@ static void update_debug_oam_buffers(void)
         address += 4;
     }
 }
+
+void emu_connect_interface()
+{
+    gearboy->ConnectInterface();
+}

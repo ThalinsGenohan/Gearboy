@@ -28,7 +28,8 @@
 #include "Audio.h" 
 #include "Video.h" 
 #include "SixteenBitRegister.h" 
-#include "MemoryRule.h"  
+#include "MemoryRule.h"
+#include "CartInterface.h"
 
 #endif	/* GEARBOY_H */
 

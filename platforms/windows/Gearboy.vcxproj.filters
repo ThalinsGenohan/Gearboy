@@ -147,6 +147,9 @@
     <ClCompile Include="..\desktop-shared\gui_debug.cpp">
       <Filter>desktop-shared</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\CartInterface.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Audio.h">
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="..\desktop-shared\gui_debug_constants.h">
       <Filter>desktop-shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\CartInterface.h">
+      <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
