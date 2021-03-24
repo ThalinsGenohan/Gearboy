@@ -86,4 +86,3 @@ platforms/libretro/libs/
 
 #boost
 platforms/**/boost-1.75.0/
-!platforms/**/put_boost_here
