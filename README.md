@@ -8,6 +8,10 @@ This is an open source project with its ongoing development made possible thanks
 
 Please, consider [sponsoring](https://github.com/sponsors/drhelius) and following me on [Twitter](https://twitter.com/drhelius) for updates.
 
+## Fork
+
+This fork of Gearboy adds the ability to use an external interface for ROM and external RAM, allowing for custom cartridge emulation.
+
 ----------
 
 ## Downloads
